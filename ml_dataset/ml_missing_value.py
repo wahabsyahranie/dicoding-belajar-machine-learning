@@ -43,7 +43,7 @@ class Ml_clean:
 
     # melakukan pemeriksaan terhadap data yang sudah melewati tahapan verifikasi missing value
     missing_values = df.isnull().sum()
-    print(missing_values[missing_values > 0])
+    # print(missing_values[missing_values > 0])
 
     '''MENGATASI OUTLIERS'''
     '''Path: ml_outliers agregate or delete (.py)'''  # mencoba oop
@@ -101,10 +101,34 @@ class Ml_clean:
     '''MENANGANI DUPLIKASI DATA'''
     # mengidentifikasi baris duplikat
     duplicates = df.duplicated()
-    print('baris duplikat:')
-    print(df[duplicates])
+    # print('baris duplikat:')
+    # print(df[duplicates])
 
     # # Menghapus baris duplikat
     # df = df.drop_duplicates()
     # print("DataFrame setelah menghapus duplikat:")
     # print(df)
+
+    '''MENGONVERSI TIPE DATA'''
+    # data kategorikal biasanya diubah menjadi bentuk numerik yang dapat dipahami oleh model yang biasa disebut encoding
+    # melihat data kategorical yang ada pada dataset
+    category_features = df.select_dtypes(include=['object']).columns
+    df[category_features]
+    # print(df[category_features])
+
+    # Kita akan menggunakan metode one hot encoding dan label encoding karena data kategorikal yang ada pada dataset ini tidak memiliki urutan
+    # one hot encoding
+    df_one_hot = pd.get_dummies(df, columns=category_features)
+    df_one_hot
+
+    # label encoding
+    from sklearn.preprocessing import LabelEncoder
+    # inisialisasi label encoder
+    label_encoder = LabelEncoder()
+    df_lencoder = pd.DataFrame(df)
+    for col in category_features:
+        df_lencoder[col] = label_encoder.fit_transform(df[col])
+    # menampilkan hasil
+    # print(df_lencoder)
+
+    
