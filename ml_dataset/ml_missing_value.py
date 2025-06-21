@@ -330,3 +330,11 @@ class Ml_clean:
     # menyimpan model ke dalam file
     with open('gbr_model.pkl', 'wb') as file:
         pickle.dump(GBR, file)
+
+    '''MEMUAT MODEL'''
+    # memuat model dari file joblib
+    joblib_model = joblib.load('gbr_model.joblib')
+
+    # memuat model dari file picke
+    with open('gbr_model.pkl', 'rb') as file:
+        pickle_model = pickle.load(file)
